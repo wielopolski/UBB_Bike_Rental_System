@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - UBB Bike Rental System</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/UBB_Bike_Rental_System.styles.css" asp-append-version="true" />
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">UBB Bike Rental System</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Vehicle" asp-action="Index">Lista rowerków</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+   @* <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2023 - UBB Bike Rental System - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>*@
+
+    <footer class="mt-30 text-white text-center text-lg-start bg-primary footer" style="display: contents;">
+        <div class="footer-bottom-area bg-dark-light section-padding">
+            <div class="container pt-5">
+                <div class="row widgets footer-widgets">
+                    <div class="col-lg-4 col-md-6 col-12">
+                        <div class="single-widget widget-contact">
+                            <h5 class="widget-title">Dane kontaktowe</h5>
+                            <ul>
+                                <li class="address">
+                                    <span class="icon"><i class="fa fa-map-marker"></i></span>
+                                    <p>Adres : Bielsko-Biała, Willowa 2, PL</p>
+                                </li>
+                                <li class="phone">
+                                    <span class="icon"><i class="fa fa-phone"></i></span>
+                                    <p>+ 555 555 555</p>
+                                </li>
+                                <li class="email">
+                                    <span class="icon"><i class="fa fa-envelope-o"></i></span>
+                                    <p>ubb_bike@example.com</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-12">
+                        <div class="single-widget widget-about">
+                            <h5 class="widget-title">O nas</h5>
+                            <p>
+                                         Wypożyczamy wszystko co się rusza
+                            </p>
+
+                                    <p>
+                       Wypożyczasz rano jeździsz cały dzień :D
+                    </p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 col-12">
+                        <h5 class="widget-title">Godziny otwarcia</h5>
+                        
+
+                        <table class="table text-center text-white">
+                            <tbody class="font-weight-normal">
+                                <tr>
+                                    <td>Pon - Czw:</td>
+                                    <td>8:00 - 21:00</td>
+                                </tr>
+                                <tr>
+                                    <td>Pt - Sb:</td>
+                                    <td>8:00 - 22:00</td>
+                                </tr>
+                                <tr>
+                                    <td>Nd:</td>
+                                    <td>9:00 - 23:00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
