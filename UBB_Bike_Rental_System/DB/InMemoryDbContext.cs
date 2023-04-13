@@ -16,7 +16,7 @@ namespace UBB_Bike_Rental_System.DB
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<VehicleType>().HasKey(x=>x.TypeId);
+            modelBuilder.Entity<VehicleType>().HasKey(x=>x.Id);
             modelBuilder.Entity<Vehicle>().HasKey(x=>x.Id);
             modelBuilder.Entity<Rental>().HasKey(x=>x.RentalId);
             modelBuilder.Entity<Booking>().HasKey(x=>x.BookingId);

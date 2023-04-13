@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Net;
 using System.Numerics;
@@ -37,7 +38,7 @@ namespace UBB_Bike_Rental_System.Controllers
            
             try
             {
-                vehicles = (await _vehicleRepository.GetAll()).ToList();
+                vehicles = (await _vehicleRepository.GetAll()).Include(p => p.Type).ToList();
             }
             catch (Exception e)
             {

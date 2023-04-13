@@ -15,6 +15,8 @@ builder.Services.AddScoped(typeof(IRepository<>),typeof(Repository<>));
 
 var app = builder.Build();
 
+await CreateDB(app);
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -35,3 +37,12 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+
+async Task CreateDB(IHost host)
+{
+    await using var scope = host.Services.CreateAsyncScope();
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<InMemoryDbContext>();
+    await Seeder.Seed(context);
+}
