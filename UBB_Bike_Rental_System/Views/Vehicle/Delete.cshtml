@@ -1,11 +1,6 @@
 ﻿@model UBB_Bike_Rental_System.Models.VehicleDetailViewModel
 
-@{
-    ViewData["Title"] = "Details";
-}
-
-<h1>Details</h1>
-
+<h3>Are you sure you want to delete this?</h3>
 <div>
     <h4>VehicleDetailViewModel</h4>
     <hr />
@@ -41,8 +36,9 @@
             @Html.DisplayFor(model => model.Price)
         </dd>
     </dl>
-</div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id}) |
-    <a asp-action="Index">Back to List</a>
+    
+    <form asp-action="Delete">
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
 </div>
