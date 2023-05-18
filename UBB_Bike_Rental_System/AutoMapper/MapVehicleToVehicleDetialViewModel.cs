@@ -8,6 +8,8 @@ namespace UBB_Bike_Rental_System.AutoMapper
         public MapVehicleToVehicleDetialViewModel()
         {
             CreateMap<Vehicle, VehicleDetailViewModel>();
+            CreateMap<Vehicle, VehicleEditViewModel>();
+
         }
 
     }

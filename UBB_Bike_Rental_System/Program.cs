@@ -10,7 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddAutoMapper(typeof(MapVehicleDetialViewModelToVehicle),typeof(MapVehicleToVehicleDetialViewModel));
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<InMemoryDbContext>(options => options.UseInMemoryDatabase("UBB_Bike_Rental_System"));
+builder.Services.AddDbContext<InMemoryDbContext>(options => options.UseLazyLoadingProxies()
+.UseInMemoryDatabase("UBB_Bike_Rental_System"));
 builder.Services.AddScoped(typeof(IRepository<>),typeof(Repository<>));
 
 var app = builder.Build();

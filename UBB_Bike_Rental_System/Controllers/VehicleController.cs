@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using System.Numerics;
@@ -15,9 +17,11 @@ namespace UBB_Bike_Rental_System.Controllers
     public class VehicleController : Controller
     {
         private readonly IRepository<Vehicle> _vehicleRepository;
+        private readonly IRepository<VehicleType> _vehicleTypeRepository;
         private readonly IMapper _mapper;
-        public VehicleController(IRepository<Vehicle> vehicleRepository, IMapper mapper)
+        public VehicleController(IRepository<Vehicle> vehicleRepository, IRepository<VehicleType> vehicleTypeRepository, IMapper mapper)
         {
+            _vehicleTypeRepository = vehicleTypeRepository;
             _vehicleRepository = vehicleRepository;
             _mapper = mapper;
         }
@@ -29,7 +33,7 @@ namespace UBB_Bike_Rental_System.Controllers
            
             try
             {
-                vehicles = (await _vehicleRepository.GetAll()).Include(p => p.Type).ToList();
+                vehicles = (await _vehicleRepository.GetAll()).ToList();
             }
             catch (Exception e)
             {
@@ -54,15 +58,19 @@ namespace UBB_Bike_Rental_System.Controllers
         }
 
         // GET: VehicleDetailController/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
-            return View();
+            VehicleEditViewModel vehicle = new VehicleEditViewModel();
+            var typeList = (await _vehicleTypeRepository.GetAll()).ToList();
+            vehicle.VehicleTypes = new SelectList(typeList, "Id", "Name");
+
+            return View(vehicle);
         }
 
         // POST: VehicleDetailController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(VehicleDetailViewModel vehicleView)
+        public async Task<IActionResult> Create(VehicleEditViewModel vehicleView)
         {
             try
             {
