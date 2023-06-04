@@ -17,7 +17,7 @@ namespace UBB_Bike_Rental_System.DB
             new VehicleType()
             {
                 Id = 2,
-                Name = "Quad"
+                Name = "Motorower"
             }
         };
             List<Vehicle> vehicles = new()

@@ -13,5 +13,9 @@ namespace UBB_Bike_Rental_System.Models
         [Display(Name = "Kategoria")]
         public int VehicleTypeId { get; set; }
         public SelectList VehicleTypes { get; set; }
+
+        [Display(Name = "Wypozyczalnia")]
+        public int RentalId { get; set; }
+        public SelectList Rentals { get; set; }
     }
 }

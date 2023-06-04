@@ -18,11 +18,13 @@ namespace UBB_Bike_Rental_System.Controllers
     {
         private readonly IRepository<Vehicle> _vehicleRepository;
         private readonly IRepository<VehicleType> _vehicleTypeRepository;
+        private readonly IRepository<Rental> _rentalRepository;
         private readonly IMapper _mapper;
-        public VehicleController(IRepository<Vehicle> vehicleRepository, IRepository<VehicleType> vehicleTypeRepository, IMapper mapper)
+        public VehicleController(IRepository<Vehicle> vehicleRepository, IRepository<VehicleType> vehicleTypeRepository, IRepository<Rental> rentalRepository, IMapper mapper)
         {
             _vehicleTypeRepository = vehicleTypeRepository;
             _vehicleRepository = vehicleRepository;
+            _rentalRepository = rentalRepository;
             _mapper = mapper;
         }
 
@@ -80,7 +82,9 @@ namespace UBB_Bike_Rental_System.Controllers
             }
             catch
             {
-                return View();
+                var typeList = (await _vehicleTypeRepository.GetAll()).ToList();
+                vehicleView.VehicleTypes = new SelectList(typeList, "Id", "Name");
+                return View(vehicleView);
             }
             return RedirectToAction(nameof(Index));
         }
@@ -88,17 +92,23 @@ namespace UBB_Bike_Rental_System.Controllers
         // GET: VehicleDetailController/Edit/5
         public async Task<ActionResult> Edit(int id)
         {
-			Vehicle vehicle;
-			try
-			{
-				vehicle = await _vehicleRepository.GetOne(id);
-			}
-			catch (Exception e)
-			{
-				return BadRequest(e.Message);
-			}
-			return View(_mapper.Map<VehicleDetailViewModel>(vehicle));
-		}
+ 
+            Vehicle vehicle;
+            try
+            {
+                vehicle = await _vehicleRepository.GetOne(id);
+                VehicleEditViewModel vehiclelViewModel = _mapper.Map<VehicleEditViewModel>(vehicle);
+                var typeList = (await _vehicleTypeRepository.GetAll()).ToList();
+                var rentalList = (await _rentalRepository.GetAll()).ToList();
+                vehiclelViewModel.VehicleTypes = new SelectList(typeList, "Id", "Name");
+                vehiclelViewModel.Rentals = new SelectList(rentalList, "Id", "Name");
+                return View(vehiclelViewModel);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
 
         // POST: VehicleDetailController/Edit/5
         [HttpPost]

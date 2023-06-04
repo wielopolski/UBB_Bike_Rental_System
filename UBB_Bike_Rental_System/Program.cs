@@ -8,7 +8,7 @@ using UBB_Bike_Rental_System.Repository;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddAutoMapper(typeof(MapVehicleDetialViewModelToVehicle),typeof(MapVehicleToVehicleDetialViewModel));
+builder.Services.AddAutoMapper(typeof(MapVehicle), typeof(MapRental));
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<InMemoryDbContext>(options => options.UseLazyLoadingProxies()
 .UseInMemoryDatabase("UBB_Bike_Rental_System"));

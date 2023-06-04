@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Linq;
 using System.Net;
 using System.Numerics;
@@ -15,82 +16,100 @@ namespace UBB_Bike_Rental_System.Controllers
 	{
 
 		private readonly IRepository<Rental> _rentalRepository;
-		private readonly IMapper _mapper;
-		public RentalController(IRepository<Rental> rentalRepository, IMapper mapper)
+        private readonly IRepository<Vehicle> _vehicleRepository;
+        private readonly IMapper _mapper;
+		public RentalController(IRepository<Rental> rentalRepository, IRepository<Vehicle> vehicleRepository, IMapper mapper)
 		{
 			_rentalRepository = rentalRepository;
+			_vehicleRepository = vehicleRepository;
 			_mapper = mapper;
 		}
 
 		// GET: RentalDetailController
 		public async Task<IActionResult> Index()
 		{
-			List<Rental> Rentals = new List<Rental>();
+			List<Rental> rentals = new List<Rental>();
 
 			try
 			{
-				Rentals = (await _rentalRepository.GetAll()).ToList();
+				rentals = (await _rentalRepository.GetAll()).ToList();
 			}
 			catch (Exception e)
 			{
 				return BadRequest(e.Message);
 			}
-			return View(_mapper.Map<List<RentalViewModel>>(Rentals));
+			return View(_mapper.Map<List<RentalViewModel>>(rentals));
 		}
 
 		// GET: RentalDetailController/Details/5
 		public async Task<IActionResult> Details(int id)
 		{
-			Rental Rentals;
-			try
+			Rental rental;
+            List<Vehicle> vehicles = new List<Vehicle>();
+            try
 			{
-				Rentals = await _rentalRepository.GetOne(id);
-			}
+                vehicles = (await _vehicleRepository.GetAll()).ToList();
+                rental = await _rentalRepository.GetOne(id);
+				RentalViewModel rentalViewModel = _mapper.Map<RentalViewModel>(rental);
+				rentalViewModel.Vehicles = vehicles;
+                return View(rentalViewModel);
+            }
 			catch (Exception e)
 			{
 				return BadRequest(e.Message);
 			}
-			return View(Rentals);
 		}
 
 		// GET: RentalDetailController/Create
 		public ActionResult Create()
 		{
-			return View();
+            RentalViewModel rental = new RentalViewModel();
+
+            return View(rental);
 		}
 
 		// POST: RentalDetailController/Create
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Create(RentalViewModel RentalView)
+		public async Task<IActionResult> Create(RentalViewModel rentalView)
 		{
 			try
 			{
-				Rental RentalDb = _mapper.Map<Rental>(RentalView);
+				Rental rentalDb = _mapper.Map<Rental>(rentalView);
 
-				await _rentalRepository.Create(RentalDb);
+				await _rentalRepository.Create(rentalDb);
 			}
 			catch
 			{
-				return View();
+				return View(rentalView);
 			}
 			return RedirectToAction(nameof(Index));
 		}
 
 		// GET: RentalDetailController/Edit/5
-		public ActionResult Edit(int id)
+		public async Task<ActionResult> Edit(int id)
 		{
-			return View(/*Rentals.FirstOrDefault(i => i.Id == id)*/);
-		}
+            Rental rental;
+            try
+            {
+                rental = await _rentalRepository.GetOne(id);
+                RentalViewModel rentalViewModel = _mapper.Map<RentalViewModel>(rental);
+                return View(rentalViewModel);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
 
 		// POST: RentalDetailController/Edit/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Edit(int id, Rental Rental)
+		public async Task<IActionResult> Edit(int id, Rental rental)
 		{
 			try
 			{
-				await _rentalRepository.Update(Rental);
+				await _rentalRepository.Update(rental);
 			}
 			catch
 			{
@@ -103,17 +122,27 @@ namespace UBB_Bike_Rental_System.Controllers
 		// GET: RentalDetailController/Delete/5
 		public async Task<IActionResult> Delete(int id)
 		{
-			return View(await _rentalRepository.GetOne(id));
-		}
+            Rental rental;
+            try
+            {
+                rental = await _rentalRepository.GetOne(id);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+
+            return View(_mapper.Map<RentalViewModel>(rental));
+        }
 
 		// POST: RentalDetailController/Delete/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Delete(int id, Rental Rental)
+		public async Task<IActionResult> Delete(int id, Rental rental)
 		{
 			try
 			{
-				await _rentalRepository.Delete(Rental);
+				await _rentalRepository.Delete(rental);
 			}
 			catch
 			{

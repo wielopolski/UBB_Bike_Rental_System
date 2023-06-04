@@ -19,7 +19,7 @@ namespace UBB_Bike_Rental_System.DB
             modelBuilder.Entity<VehicleType>().HasKey(x=>x.Id);
             modelBuilder.Entity<Vehicle>().HasKey(x=>x.Id);
             modelBuilder.Entity<Rental>().HasKey(x=>x.Id);
-            modelBuilder.Entity<Booking>().HasKey(x=>x.BookingId);
+            modelBuilder.Entity<Booking>().HasKey(x=>x.Id);
         }
     }
 }

@@ -4,7 +4,7 @@ namespace UBB_Bike_Rental_System.Models
 {
     public class Booking
     {
-        public int BookingId { get; set; }
+        public int Id { get; set; }
         public string User { get; set; }
 
         [ForeignKey("Vehicle")]
