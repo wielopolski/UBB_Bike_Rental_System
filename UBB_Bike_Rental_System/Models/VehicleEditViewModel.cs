@@ -8,6 +8,8 @@ namespace UBB_Bike_Rental_System.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public bool Electric { get; set; }
+        [Required]
+        [Range(0.1, 9999.99)]
         public decimal Price { get; set; }
 
         [Display(Name = "Kategoria")]

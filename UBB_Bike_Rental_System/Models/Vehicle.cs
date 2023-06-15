@@ -20,6 +20,7 @@ namespace UBB_Bike_Rental_System.Models
         [Required]
         public bool Electric { get; set; }
         [Required]
+        [Range(0.1, 9999.99)]
         public decimal Price { get; set; }
     }
 }
