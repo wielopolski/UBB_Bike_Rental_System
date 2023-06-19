@@ -9,5 +9,6 @@ public interface IRepository<TModel> where TModel : IEntity<int>
     Task Delete(TModel model);
     Task<TModel> GetOne(int id);
     Task<IQueryable<TModel>> GetAll();
+    //Task<IQueryable<TModel>> GetAllByUser(int id);
     Task<IQueryable<TModel>> FindBy(Expression<Func<TModel, bool>> predicate);
 }

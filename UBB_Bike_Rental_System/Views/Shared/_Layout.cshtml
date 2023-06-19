@@ -47,6 +47,9 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="Users" asp-controller="Booking" asp-action="Create">Zarezerwuj rower</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Users" asp-controller="Booking" asp-action="UserBookings">Twoje rezerwacje</a>
+                            </li>
                         }
                         @if (User.IsInRole("Administrator") || User.IsInRole("Operator"))
                         {

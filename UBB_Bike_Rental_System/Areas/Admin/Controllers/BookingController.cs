@@ -48,7 +48,6 @@ namespace UBB_Bike_Rental_System.Areas.Admin;
 	public async Task<IActionResult> Details(int id)
 	{
 		Booking booking;
-            List<Booking> vehicles = new List<Booking>();
             try
 		{
                 

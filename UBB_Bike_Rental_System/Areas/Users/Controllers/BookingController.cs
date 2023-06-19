@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -54,11 +55,28 @@ namespace UBB_Bike_Rental_System.Areas.Users;
 		{
 			return View(bookingView);
 		}
-		return Redirect("/home");
+		return Redirect("/Users/Booking/UserBookings");
 	}
 
-	// GET: RentalDetailController/Edit/5
-	public async Task<ActionResult> Edit(int id)
+    public async Task<IActionResult> UserBookings()
+    {
+
+        List<Booking> bookings = new List<Booking>();
+        try
+        {
+
+            bookings = (await _bookingRepository.FindBy(entity => entity.User == User.Identity.Name)).ToList();
+            List<DetailBookingViewModel> bookingsViewModel = _mapper.Map<List<DetailBookingViewModel>>(bookings);
+            return View(bookingsViewModel);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
+    // GET: RentalDetailController/Edit/5
+    public async Task<ActionResult> Edit(int id)
 	{
             Rental rental;
             try
